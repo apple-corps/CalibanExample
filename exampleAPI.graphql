@@ -6,7 +6,7 @@
       createdAt: String!
       lastUpdated: String!
    }
-
+   
    # fragment vs interface.. ?!
    interface UserInfo {
       email: String!
@@ -23,7 +23,27 @@
    }
 
    type User implements SystemFields & UserInfo & UserSettings {
+      # system fields
+      id: ID!
+      ## change type to BigInt for database mapping !?
+      systemID: Int!
+      createdAt: String!
+      lastUpdated: String!
+
+      email: String!
+      username: String!
+      fullName: String!
+      profilePictureURLs: [String!]!
+      bio: String!
+
+      # preferences: UserPreferences!
+      authProviders: [AuthProvider!]
+      accountSettings: AccountSettings
+ 
+
      # user fields
+     
+     extra: String
    }
 
     type AuthProvider {

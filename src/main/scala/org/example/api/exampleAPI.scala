@@ -13,7 +13,22 @@ object Types {
   )
   final case class MutationDeleteUserArgs(input: DeleteUserInput)
   final case class QueryGetUserArgs(input: GetUserInput)
-  final case class User() extends SystemFields with UserInfo with UserSettings
+  final case class User(
+      id: ID,
+      systemID: Int,
+      createdAt: String,
+      lastUpdated: String,
+      email: String,
+      username: String,
+      fullName: String,
+      profilePictureURLs: List[String],
+      bio: String,
+      authProviders: scala.Option[List[AuthProvider]],
+      accountSettings: scala.Option[AccountSettings],
+      extra: scala.Option[String]
+  ) extends SystemFields
+      with UserInfo
+      with UserSettings
   final case class AuthProvider(
       provider: String,
       providerUserId: String,
