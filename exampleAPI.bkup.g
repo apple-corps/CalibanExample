@@ -1,4 +1,28 @@
-   type User {
+   interface SystemFields {
+      # system fields
+      id: ID!
+      ## change type to BigInt for database mapping !?
+      systemID: Int!
+      createdAt: String!
+      lastUpdated: String!
+   }
+   
+   # fragment vs interface.. ?!
+   interface UserInfo {
+      email: String!
+      username: String!
+      fullName: String!
+      profilePictureURLs: [String!]!
+      bio: String!
+   }
+
+   interface UserSettings {
+      # preferences: UserPreferences!
+      authProviders: [AuthProvider!]
+      accountSettings: AccountSettings
+   }
+
+   type User implements SystemFields & UserInfo & UserSettings {
       # system fields
       id: ID!
       ## change type to BigInt for database mapping !?
@@ -22,7 +46,7 @@
      extra: String
    }
 
-   type Event  {
+   type Event implements SystemFields {
        id: ID!
        systemID: Int!
        ## change type to BigInt for database mapping !?
@@ -95,6 +119,6 @@
 
 type Query {
      getUser(input: GetUserInput!) : User
-     updateUser(input: UpdateUserInput!) : User
+
 }
  

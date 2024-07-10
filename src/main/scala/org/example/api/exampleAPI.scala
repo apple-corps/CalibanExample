@@ -1,20 +1,28 @@
 package org.example.api
 
 import Types._
-
 import caliban.schema.Annotations._
 
 object Types {
-  type ID = java.util.UUID
   final case class MutationCreateUserArgs(input: CreateUserInput)
+      derives caliban.schema.Schema.SemiAuto,
+        caliban.schema.ArgBuilder
   final case class MutationUpdateUserArgs(
       userID: Int,
       input: scala.Option[UpdateUserInput]
-  )
+  ) derives caliban.schema.Schema.SemiAuto,
+        caliban.schema.ArgBuilder
   final case class MutationDeleteUserArgs(input: DeleteUserInput)
+      derives caliban.schema.Schema.SemiAuto,
+        caliban.schema.ArgBuilder
   final case class QueryGetUserArgs(input: GetUserInput)
+      derives caliban.schema.Schema.SemiAuto,
+        caliban.schema.ArgBuilder
+  final case class QueryUpdateUserArgs(input: UpdateUserInput)
+      derives caliban.schema.Schema.SemiAuto,
+        caliban.schema.ArgBuilder
   final case class User(
-      id: ID,
+      id: Long,
       systemID: Int,
       createdAt: String,
       lastUpdated: String,
@@ -26,71 +34,69 @@ object Types {
       authProviders: scala.Option[List[AuthProvider]],
       accountSettings: scala.Option[AccountSettings],
       extra: scala.Option[String]
-  ) extends SystemFields
-      with UserInfo
-      with UserSettings
+  ) derives caliban.schema.Schema.SemiAuto
+  final case class Event(
+      id: Long,
+      systemID: Int,
+      createdAt: String,
+      lastUpdated: String,
+      name: String,
+      description: String
+  ) derives caliban.schema.Schema.SemiAuto
   final case class AuthProvider(
       provider: String,
       providerUserId: String,
       accessToken: scala.Option[String],
       refreshToken: scala.Option[String],
       expiresAt: scala.Option[String]
-  )
+  ) derives caliban.schema.Schema.SemiAuto
   final case class AccountSettings(
       webNotifications: Int,
       emailNotifications: Int
-  )
+  ) derives caliban.schema.Schema.SemiAuto
   final case class CreateUserInput(
-      userInfo: scala.Option[UserInfo],
-      userSettings: scala.Option[UserSettings]
-  )
+      email: String,
+      username: String,
+      fullName: String,
+      profilePictureURLs: List[String],
+      bio: String
+  ) derives caliban.schema.Schema.SemiAuto,
+        caliban.schema.ArgBuilder
   final case class GetUserInput(
+      id: scala.Option[Long],
       systemID: scala.Option[Int],
-      username: scala.Option[Int],
-      fullName: scala.Option[Int]
-  )
+      username: scala.Option[String],
+      fullName: scala.Option[String]
+  ) derives caliban.schema.Schema.SemiAuto,
+        caliban.schema.ArgBuilder
   final case class UpdateUserInput(
-      userInfo: scala.Option[UserInfo],
-      userSettings: scala.Option[UserSettings],
-      profilePicsToAdd: scala.Option[List[String]]
-  )
-  final case class DeleteUserInput(systemID: Int, password: String)
-
-  @GQLInterface
-  sealed trait SystemFields extends scala.Product with scala.Serializable {
-    def id: ID
-    def systemID: Int
-    def createdAt: String
-    def lastUpdated: String
-  }
-
-  @GQLInterface
-  sealed trait UserInfo extends scala.Product with scala.Serializable {
-    def email: String
-    def username: String
-    def fullName: String
-    def profilePictureURLs: List[String]
-    def bio: String
-  }
-
-  @GQLInterface
-  sealed trait UserSettings extends scala.Product with scala.Serializable {
-    def authProviders: scala.Option[List[AuthProvider]]
-    def accountSettings: scala.Option[AccountSettings]
-  }
+      email: scala.Option[String],
+      username: scala.Option[String],
+      fullName: scala.Option[String],
+      profilePictureURLs: scala.Option[List[String]],
+      bio: scala.Option[String]
+  ) derives caliban.schema.Schema.SemiAuto,
+        caliban.schema.ArgBuilder
+  final case class DeleteUserInput(
+      id: scala.Option[Long],
+      systemID: Int,
+      password: String
+  ) derives caliban.schema.Schema.SemiAuto,
+        caliban.schema.ArgBuilder
 
 }
 
 object Operations {
 
   final case class Query(
-      getUser: QueryGetUserArgs => zio.UIO[scala.Option[User]]
-  )
+      getUser: QueryGetUserArgs => zio.UIO[scala.Option[User]],
+      updateUser: QueryUpdateUserArgs => zio.UIO[scala.Option[User]]
+  ) derives caliban.schema.Schema.SemiAuto
 
   final case class Mutation(
       createUser: MutationCreateUserArgs => zio.UIO[scala.Option[User]],
       updateUser: MutationUpdateUserArgs => zio.UIO[scala.Option[User]],
       deleteUser: MutationDeleteUserArgs => zio.UIO[Boolean]
-  )
+  ) derives caliban.schema.Schema.SemiAuto
 
 }

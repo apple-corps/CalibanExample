@@ -2,6 +2,7 @@ package org.example.api
 
 import zio._
 import caliban._
+import caliban.schema.Annotations._
 import caliban.RootResolver
 
 import org.example.api._

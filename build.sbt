@@ -20,6 +20,6 @@ lazy val myproject = project
           // you can customize the codegen further with this DSL
           .clientName("exampleAPI.scala")
           .packageName("org.example.api")
-      ),
+      )
     )
   )
