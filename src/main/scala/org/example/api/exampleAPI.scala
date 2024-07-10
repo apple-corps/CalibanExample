@@ -1,7 +1,6 @@
 package org.example.api
 
 import Types._
-import caliban.schema.Annotations._
 
 object Types {
   final case class MutationCreateUserArgs(input: CreateUserInput)

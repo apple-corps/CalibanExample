@@ -1,4 +1,6 @@
+/**
 package org.example.api
+
 
 import zio._
 import caliban._
@@ -22,3 +24,4 @@ object Resolvers {
       deleteUser = args => ZIO.succeed(true)
     )
 }
+**/
