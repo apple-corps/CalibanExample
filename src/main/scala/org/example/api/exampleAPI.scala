@@ -30,7 +30,6 @@ object Types {
       fullName: String,
       profilePictureURLs: List[String],
       bio: String,
-      authProviders: scala.Option[List[AuthProvider]],
       accountSettings: scala.Option[AccountSettings],
       extra: scala.Option[String]
   ) derives caliban.schema.Schema.SemiAuto
@@ -41,13 +40,6 @@ object Types {
       lastUpdated: String,
       name: String,
       description: String
-  ) derives caliban.schema.Schema.SemiAuto
-  final case class AuthProvider(
-      provider: String,
-      providerUserId: String,
-      accessToken: scala.Option[String],
-      refreshToken: scala.Option[String],
-      expiresAt: scala.Option[String]
   ) derives caliban.schema.Schema.SemiAuto
   final case class AccountSettings(
       webNotifications: Int,

@@ -13,7 +13,8 @@
       bio: String!
 
       # preferences: UserPreferences!
-      authProviders: [AuthProvider!]
+#removing for quill decoder error
+       #      authProviders: [AuthProvider!]
       accountSettings: AccountSettings
  
 
@@ -34,14 +35,14 @@
        description: String!
    }
 
-    type AuthProvider {
-      # Consider an enumeration type of Google, Facebook, Apple
-      provider: String!
-      providerUserId: String!
-      accessToken: String
-      refreshToken: String
-      expiresAt: String
-    }
+#    type AuthProvider {
+#      # Consider an enumeration type of Google, Facebook, Apple
+#      provider: String!
+#      providerUserId: String!
+#      accessToken: String
+#      refreshToken: String
+#      expiresAt: String
+#    }
 
 #   type UserPreferences {
 #      #interests: [String!]!
