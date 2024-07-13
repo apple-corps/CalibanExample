@@ -21,7 +21,7 @@ object QuillTestApp {
       query[User].filter(u => u.fullName == lift(named))
     }
 
-    val people = run(somePeople)
+    val people : List[User] = run(somePeople)
     // TODO Get SQL
     println(people)
     }
